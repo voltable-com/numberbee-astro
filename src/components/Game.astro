@@ -1,0 +1,60 @@
+---
+import SocialShare from '@component/SocialShare.astro';
+---
+
+<div x-data="numberbee()">
+<p>
+    Options:
+    <input x-ref="easy" id="easy" type="checkbox" name="levelc" value="easy" @click='level'/>
+    <label for="easy">No repetition</label>
+    <input x-ref="binary" id="binary" type="checkbox" name="levelc" value="binary" @click='level'/>
+    <label for="binary">Binary</label>
+</p>
+<p>
+    <label for="guess" x-show="l=='standard'">Enter your guess, a five digit number (digits can repeat) and press `Enter`</label>
+    <label for="guess" x-show="l=='easy'" x-cloak>Enter your guess, a five digit number (digits can not repeat) and press `Enter`</label>
+    <label for="guess" x-show="l=='binary'" x-cloak>Enter your guess, a five binary number (just zeros and ones ) and press `Enter`</label>
+    <input class="no-spin" id="guess" type="text" inputmode="numeric" pattern="[0-9]*" @input="input" @keyup.enter="keypress" />
+</p>
+<p x-show="count" x-cloak>Consumed <span x-text="count"></span> of <span x-text="m"></span> guesses!</p>
+<p x-show="msg" x-cloak>Already tried!</p>
+
+<div x-show="ended" x-cloak>
+    <p>Contratulations! You guessed the number from <span x-text="count"></span> tries! </p>
+    <p><a href="/">Click to start again!</a></p>
+    <p>Pass the challenge to friends:</p>
+</div>
+
+<div x-show="wrong" x-cloak>
+    <p>Hmm! I guess more training is needed! </p>
+    <p><a href="/">Click to start again!</a></p>
+    <p>Could your friends do better!?</p>
+</div>
+
+<p x-show="ended || wrong" x-cloak>
+    <SocialShare />
+</p>
+
+<div class="t">
+    <div class="rr">
+        <div x-text="n[0]"></div>
+        <div x-text="n[1]"></div>
+        <div x-text="n[2]"></div>
+        <div x-text="n[3]"></div>
+        <div x-text="n[4]"></div>
+        <div>P</div>
+        <div>M</div>
+    </div>
+    <template x-for="g in guesses"> 
+        <div class="r">
+            <div x-text="g.v[0]"></div>
+            <div x-text="g.v[1]"></div>
+            <div x-text="g.v[2]"></div>
+            <div x-text="g.v[3]"></div>
+            <div x-text="g.v[4]"></div>
+            <div x-text="g.p"></div>
+            <div x-text="g.m"></div>
+        </div>
+    </template>
+</div>
+</div>
