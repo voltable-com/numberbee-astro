@@ -30,7 +30,6 @@ const {
 	description,
 	image
 } = Astro.props as Props
-
 ---
 <!DOCTYPE html>
 <html lang="en" class="theme-light">
@@ -86,9 +85,8 @@ const {
     <div class="a">
         <slot />
     </div>
-
-    {siteconfig.showgtm && <GoogleTagManager googleVerification="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" googleTag="G-9TSX4XKJLR"/>}
-    {siteconfig.showcookieconsent && <CookieConsent googleVerification="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" googleTag="G-9TSX4XKJLR"/>}
+    {siteconfig.showgtm && <GoogleTagManager verification="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" tag="G-9TSX4XKJLR"/>}
+    {siteconfig.showcookieconsent && <CookieConsent verification="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" tag="G-9TSX4XKJLR"/>}
 
 </body>
 </html>

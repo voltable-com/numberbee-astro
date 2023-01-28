@@ -1,28 +1,28 @@
 ---
 export interface Props {
-    googleVerification: string;
-    googleTag: string;
+    verification: string;
+    tag: string;
 }
 
 const {
-    googleVerification,
-    googleTag,
+    verification,
+    tag,
 } = Astro.props as Props;
 
+const gtag= "https://www.googletagmanager.com/gtag/js?id=" + tag  
 ---
 <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
 <link rel="dns-prefetch" href="//www.googletagmanager.com">
 <link rel="preconnect" href="//pagead2.googlesyndication.com">
 <link rel="preconnect" href="//www.googletagmanager.com">
 
-<meta name="google-site-verification" content="{googleVerification}" />
-
+<meta name="google-site-verification" content={verification} />
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={googleTag}" is:inline></script>
-<script is:inline>
+<script async src={gtag} is:inline></script>
+<script define:vars={{ tag }}>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', '{googleTag}');
+  gtag('config', tag);
 </script>
