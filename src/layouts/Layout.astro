@@ -4,7 +4,6 @@ import '@style/m.css';
 
 import { SEO } from "astro-seo"
 import { seoconfig } from "@util/seoconfig"
-import { siteconfig } from "@util/siteconfig"
 import Favicons from "@component/Favicons.astro"
 import Fonts from "@component/Fonts.astro"
 import GoogleTagManager from "@component/GoogleTagManager.astro"
@@ -85,8 +84,10 @@ const {
     <div class="a">
         <slot />
     </div>
-    {siteconfig.showgtm && <GoogleTagManager verification="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" tag="G-9TSX4XKJLR"/>}
-    {siteconfig.showcookieconsent && <CookieConsent verification="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" tag="G-9TSX4XKJLR"/>}
+
+    <GoogleTagManager site_id="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" id="G-9TSX4XKJLR"/>
+    <GoogleTagManager id="G-9TSX4XKJLR"/>
+    <CookieConsent />
 
 </body>
 </html>
