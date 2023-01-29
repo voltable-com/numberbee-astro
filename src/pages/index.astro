@@ -7,8 +7,10 @@ import AboutGame from '@component/AboutGame.astro'
 import GameHeader from '@component/GameHeader.astro'
 import Game from '@component/Game.astro'
 import Layout from '@layout/Layout.astro'
+
+const title = "NumberBee Game by Voltable.com - online game, binary number, fun discovery number game"
 ---
-<Layout title="NumberBee Game by Voltable.com - online game, binary number, fun discovery number game">
+<Layout title={title}>
   <ToggleTheme />
   <GameHeader />
   <Game />
