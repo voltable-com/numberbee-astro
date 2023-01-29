@@ -14,7 +14,7 @@ import SocialShare from '@component/SocialShare.astro';
     <label for="guess" x-show="l=='standard'">Enter your guess, a five digit number (digits can repeat) and press `Enter`</label>
     <label for="guess" x-show="l=='easy'" x-cloak>Enter your guess, a five digit number (digits can not repeat) and press `Enter`</label>
     <label for="guess" x-show="l=='binary'" x-cloak>Enter your guess, a five binary number (just zeros and ones ) and press `Enter`</label>
-    <input class="no-spin" id="guess" type="text" inputmode="numeric" pattern="[0-9]*" @input="input" @keyup.enter="keypress" />
+    <input class="no-spin" id="guess" type="text" inputmode="numeric" pattern="[0-9]*" @input="input" @keyup.enter="keypress" autocapitalize="none" />
 </p>
 <p x-show="count" x-cloak>Consumed <span x-text="count"></span> of <span x-text="m"></span> guesses!</p>
 <p x-show="msg" x-cloak>Already tried!</p>
