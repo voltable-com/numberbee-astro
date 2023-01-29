@@ -1,28 +1,31 @@
 ---
 export interface Props {
-    verification: string;
-    tag: string;
+    id: string;
+    site_id?: string;
+    partytown?:boolean;
 }
 
 const {
-    verification,
-    tag,
+    id,
+    site_id = '',
+    partytown = false
 } = Astro.props as Props;
 
-const gtag= "https://www.googletagmanager.com/gtag/js?id=" + tag  
+const attrs = partytown ? { type: "text/partytown" } : {};
 ---
 <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
 <link rel="dns-prefetch" href="//www.googletagmanager.com">
 <link rel="preconnect" href="//pagead2.googlesyndication.com">
 <link rel="preconnect" href="//www.googletagmanager.com">
 
-<meta name="google-site-verification" content={verification} />
+{site_id && <meta name="google-site-verification" content={site_id} /> }
+
 <!-- Google tag (gtag.js) -->
-<script async src={gtag} is:inline></script>
-<script define:vars={{ tag }}>
+<script async src={`https://www.googletagmanager.com/gtag/js?id=${id}`} is:inline {...attrs}></script>
+<script define:vars={{ id }} {...attrs}>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', tag);
+  gtag('config', id);
 </script>
