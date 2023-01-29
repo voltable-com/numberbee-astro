@@ -7,17 +7,15 @@ import { seoconfig } from "@util/seoconfig"
 import Favicons from "@component/Favicons.astro"
 import Fonts from "@component/Fonts.astro"
 import GoogleTagManager from "@component/GoogleTagManager.astro"
+import GoogleTagManagerHead from "@component/GoogleTagManagerHead.astro"
 import CookieConsent from "@component/CookieConsent.astro"
+import CookieConsentStyle from "@component/CookieConsentStyle.astro"
 
 // Props
 export interface Props {
-	/** Title of the page. */
 	title: string
-	/** Specific OpenGraph page title. */
 	ogTitle?: string
-	/** Description of the page. */
 	description?: string
-	/** Image thumbnail for the page. */
 	image?: {
 		url: string
 		alt: string
@@ -77,6 +75,8 @@ const {
     
     <Fonts />
     <Favicons />
+    <CookieConsentStyle />
+    <GoogleTagManagerHead id="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" />
 
 </head>
 <body>
@@ -85,7 +85,6 @@ const {
         <slot />
     </div>
 
-    <GoogleTagManager site_id="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" id="G-9TSX4XKJLR"/>
     <GoogleTagManager id="G-9TSX4XKJLR"/>
     <CookieConsent />
 
