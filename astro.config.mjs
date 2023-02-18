@@ -26,7 +26,7 @@ export default defineConfig({
     includeAssets: ['favicon.svg'],
     manifest: {
       name: 'Numberbee Game by Voltable.com',
-      short_name: 'Numberbee Game by Voltable.com',
+      short_name: 'Numberbee Game',
       theme_color: '#ffffff',
       start_url: '/',
       icons: [{
