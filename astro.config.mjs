@@ -7,9 +7,6 @@ import AstroPWA from '@vite-pwa/astro';
 import { seoconfig } from "./utils/seoconfig";
 
 // https://astro.build/config
-import partytown from "@astrojs/partytown";
-
-// https://astro.build/config
 export default defineConfig({
   site: seoconfig.baseURL,
   build: {
@@ -53,9 +50,5 @@ export default defineConfig({
       enabled: true,
       navigateFallback: '/404'
     }
-  }), partytown({
-    config: { 
-      forward: ["dataLayer.push"] 
-    },
   })]
 });
