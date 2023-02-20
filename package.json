@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^0.15.1",
+    "@astrojs/partytown": "^1.0.3",
     "@vite-pwa/astro": "^0.0.1",
     "astro": "^2.0.2",
     "astro-compress": "^1.1.28",

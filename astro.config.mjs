@@ -4,8 +4,10 @@ import { defineConfig } from 'astro/config';
 import mdx from "@astrojs/mdx";
 import compress from "astro-compress";
 import AstroPWA from '@vite-pwa/astro';
-
 import { seoconfig } from "./utils/seoconfig";
+
+// https://astro.build/config
+import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
@@ -51,5 +53,9 @@ export default defineConfig({
       enabled: true,
       navigateFallback: '/404'
     }
+  }), partytown({
+    config: { 
+      forward: ["dataLayer.push"] 
+    },
   })]
 });
