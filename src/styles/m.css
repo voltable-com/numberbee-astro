@@ -60,7 +60,7 @@ a:hover {text-decoration: dashed;}
     padding: 5px;
     box-sizing: border-box;
 }
-img {display:inline-flex}
+img {display:inline-flex;height:100%}
 .r, .rr {display: grid;grid-template-columns: repeat(7, 1fr);grid-gap: 5px;}
 .r div:before, .rr div:before {content: "";display: inline-block;padding-bottom: 100%;}
 .r div, .rr div {
