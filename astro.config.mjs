@@ -2,13 +2,13 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 import mdx from "@astrojs/mdx";
-import compress from "astro-compress";
 import AstroPWA from '@vite-pwa/astro';
 import { seoconfig } from "./utils/seoconfig";
 
 // https://astro.build/config
 export default defineConfig({
   site: seoconfig.baseURL,
+  compressHTML: true,
   build: {
     assets: "assets"
   },
@@ -18,7 +18,7 @@ export default defineConfig({
       __DATE__: `'${new Date().toISOString()}'`
     }
   },
-  integrations: [mdx(), compress(), AstroPWA({
+  integrations: [mdx(), AstroPWA({
     mode: 'development',
     base: '/',
     scope: '/',
