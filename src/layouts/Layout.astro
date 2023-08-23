@@ -6,8 +6,6 @@ import { SEO } from "astro-seo"
 import { seoconfig } from "@util/seoconfig"
 import Favicons from "@component/Favicons.astro"
 import Fonts from "@component/Fonts.astro"
-import GoogleTagManager from "@component/GoogleTagManager.astro"
-import GoogleTagManagerHead from "@component/GoogleTagManagerHead.astro"
 import CookieConsent from "@component/CookieConsent.astro"
 import CookieConsentStyle from "@component/CookieConsentStyle.astro"
 
@@ -78,7 +76,6 @@ const {
     <Fonts />
     <Favicons />
     <CookieConsentStyle />
-    <GoogleTagManagerHead id="Ty01EXqiFX_7YAWAq0Yw0Mc3LEied3mS6aZLrWWeqS4" />
 
 </head>
 <body>
@@ -87,7 +84,6 @@ const {
         <slot />
     </div>
 
-    <GoogleTagManager id="G-9TSX4XKJLR"/>
     <CookieConsent />
 
 </body>
