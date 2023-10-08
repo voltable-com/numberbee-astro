@@ -1,7 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
-import mdx from "@astrojs/mdx";
 import AstroPWA from '@vite-pwa/astro';
 import { seoconfig } from "./utils/seoconfig";
 
@@ -18,7 +17,7 @@ export default defineConfig({
       __DATE__: `'${new Date().toISOString()}'`
     }
   },
-  integrations: [mdx(), AstroPWA({
+  integrations: [AstroPWA({
     mode: 'development',
     base: '/',
     scope: '/',

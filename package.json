@@ -12,11 +12,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.15.1",
     "@vite-pwa/astro": "^0.0.1",
-    "astro": "^2.10.12",
-    "astro-seo": "^0.7.0",
-    "vite-plugin-pwa": "^0.14.1",
-    "workbox-window": "^6.5.4"
+    "astro": "^3.2.3",
+    "astro-seo": "^0.8.0",
+    "vite-plugin-pwa": "^0.16.5",
+    "workbox-window": "^7.0.0"
   }
 }
