@@ -1,3 +1,81 @@
-<a href="https://twitter.com/intent/tweet?text=Check+this+little+fun+discovery+number+game!&url=http://www.numberbeegame.com" rel="noopener" target="_blank" class="tw tb">Tweet!</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.numberbeegame.com" rel="noopener" target="_blank" class="fb tb">Facebook!</a>
-<a href="https://www.buymeacoffee.com/voltable.com" rel="noopener" target="_blank" class="cf tb">Support me with a coffee!</a>
+<div class="share">
+    <a href="https://twitter.com/intent/tweet?text=Check+this+little+fun+discovery+number+game!&url=http://www.numberbeegame.com" rel="noopener" target="_blank" class="share-btn share-x">
+        <span class="share-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.19L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.18h1.7L7.4 4.73H5.58l11.09 14.45Z"/></svg></span>
+        Tweet!
+    </a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.numberbeegame.com" rel="noopener" target="_blank" class="share-btn share-fb">
+        <span class="share-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.87.25-1.46 1.5-1.46h1.6V4.46A21 21 0 0 0 14.27 4.3c-2.3 0-3.87 1.4-3.87 3.97v2.23H7.8v3h2.6V21h3.1Z"/></svg></span>
+        Facebook!
+    </a>
+    <a href="https://www.buymeacoffee.com/voltable.com" rel="noopener" target="_blank" class="share-btn share-coffee">
+        <span class="share-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h12v4.5A5.5 5.5 0 0 1 10.5 19h-1A5.5 5.5 0 0 1 4 13.5V9Z"/><path d="M16 10.5h1.5a2.5 2.5 0 0 1 0 5H16M7.5 2.5c-.6.8.6 1.7 0 2.5M11 2.5c-.6.8.6 1.7 0 2.5"/></svg></span>
+        Support me with a coffee!
+    </a>
+</div>
+
+<style>
+.share {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .6rem;
+}
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    min-height: 2.75rem;
+    padding: .35rem 1rem .35rem .4rem;
+    font-family: var(--font-fun);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--text);
+    text-decoration: none;
+    background: var(--surface-solid);
+    border: 2px solid var(--border);
+    border-radius: var(--pill);
+    box-shadow: 0 3px 0 var(--tile-edge), var(--shadow-sm);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .2s var(--ease-spring), box-shadow .2s var(--ease-out);
+}
+.share-icon {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    color: var(--icon-ink);
+    background: var(--icon-bg);
+    transition: transform .35s var(--ease-spring);
+}
+.share-icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+}
+.share-x {
+    --icon-bg: oklch(20% 0 0);
+    --icon-ink: #fff;
+}
+.share-fb {
+    --icon-bg: #1877f2;
+    --icon-ink: #fff;
+}
+.share-coffee {
+    --icon-bg: #ffdd00;
+    --icon-ink: oklch(25% .05 60);
+}
+@media (hover: hover) {
+    .share-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 0 var(--tile-edge), var(--shadow-md);
+        text-decoration: none;
+    }
+    .share-btn:hover .share-icon {
+        transform: rotate(-12deg) scale(1.1);
+    }
+}
+.share-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--tile-edge);
+}
+</style>

@@ -1,8 +1,172 @@
-<section>
-    <h1><a href="https://www.voltable.com/">Voltable.com</a></h1>
-</section>
+---
+import ToggleTheme from '@component/ToggleTheme.astro'
+---
+<header class="site-header">
+    <div class="topbar">
+        <a class="brand" href="https://www.voltable.com/"><span class="brand-hex" aria-hidden="true"></span>Voltable.com</a>
+        <ToggleTheme />
+    </div>
 
-<section>
-    <p><img src="img/numberbeegame.png" alt="NumberBee Game Logo" width="57" height="57" /></p>
-    <h2>NumberBee Game</h2>
-</section>
+    <div class="hero reveal">
+        <span class="deco deco-1" aria-hidden="true"></span>
+        <span class="deco deco-2" aria-hidden="true"></span>
+        <span class="deco deco-3" aria-hidden="true"></span>
+        <span class="deco deco-4" aria-hidden="true"></span>
+        <div class="hero-badge">
+            <img class="hero-logo" src="/favicon.svg" alt="NumberBee Game Logo" width="120" height="120" />
+        </div>
+        <h1 class="hero-title"><span>Number</span><span class="hero-bee">Bee</span> Game</h1>
+        <p class="hero-tagline">Crack the hidden five-digit number with clever guesses and buzzing hints.</p>
+    </div>
+</header>
+
+<style>
+.site-header {
+    display: grid;
+    gap: var(--space-s);
+}
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .4rem .9rem .4rem .55rem;
+    font-family: var(--font-fun);
+    font-weight: 600;
+    color: var(--heading);
+    text-decoration: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--pill);
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s var(--ease-spring), box-shadow .2s var(--ease-out);
+}
+.brand-hex {
+    width: 1.3rem;
+    aspect-ratio: .866;
+    clip-path: var(--hex);
+    background: repeating-linear-gradient(-45deg, var(--honey) 0 .2rem, var(--stripe) .2rem .4rem);
+    transition: transform .5s var(--ease-spring);
+}
+@media (hover: hover) {
+    .brand:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+        text-decoration: none;
+    }
+    .brand:hover .brand-hex {
+        transform: rotate(180deg);
+    }
+}
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    justify-items: center;
+    gap: .7rem;
+    padding-block: var(--space-s) var(--space-xs);
+    text-align: center;
+}
+.hero-badge {
+    position: relative;
+    width: clamp(5.5rem, 4.2rem + 7vw, 7.5rem);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    margin-block: .6rem .5rem;
+}
+/* Honeycomb halo behind the logo. */
+.hero-badge::before, .hero-badge::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    clip-path: var(--hex);
+}
+.hero-badge::before {
+    inset: -24% -14%;
+    background: conic-gradient(from 200deg, var(--honey), var(--pink), var(--honey-2), var(--leaf), var(--sky), var(--honey));
+    opacity: .85;
+}
+.hero-badge::after {
+    inset: -14% -5%;
+    background: var(--surface-solid);
+}
+.hero-logo {
+    width: 100%;
+    height: auto;
+    border-radius: 26%;
+    box-shadow: 0 .3rem 0 var(--honey-edge), var(--shadow-lg);
+}
+.hero-title {
+    font-size: var(--step-3);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -.02em;
+    text-shadow: 0 .06em 0 var(--title-shadow);
+}
+.hero-bee {
+    color: var(--accent-text);
+}
+.hero-tagline {
+    max-width: 32ch;
+    font-size: var(--step-1);
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--text-muted);
+}
+
+.deco {
+    position: absolute;
+    z-index: -2;
+    width: var(--s);
+    aspect-ratio: .866;
+    clip-path: var(--hex);
+    background: var(--c);
+    opacity: .75;
+}
+.deco-1 { --s: 2.4rem; --c: var(--honey); top: 12%; left: 8%; rotate: -12deg; }
+.deco-2 { --s: 1.3rem; --c: var(--pink); top: 52%; left: 16%; rotate: 18deg; }
+.deco-3 { --s: 1.8rem; --c: var(--leaf); top: 18%; right: 10%; rotate: 8deg; }
+.deco-4 { --s: 1.1rem; --c: var(--sky); top: 60%; right: 18%; rotate: -20deg; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-.45rem) rotate(2deg); }
+}
+@keyframes drift {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-.8rem); }
+}
+@keyframes spin {
+    to { rotate: 360deg; }
+}
+@keyframes celebrate {
+    0% { transform: none; }
+    30% { transform: translateY(-.8rem) rotate(-10deg) scale(1.08); }
+    60% { transform: translateY(0) rotate(8deg) scale(1.02); }
+    100% { transform: none; }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .hero-logo {
+        animation: float 5s ease-in-out infinite;
+    }
+    .hero-badge::before {
+        animation: spin 24s linear infinite;
+    }
+    .deco {
+        animation: drift var(--t, 6s) ease-in-out infinite;
+    }
+    .deco-2 { --t: 7.5s; animation-delay: -2s; }
+    .deco-3 { --t: 6.8s; animation-delay: -4s; }
+    .deco-4 { --t: 8.2s; animation-delay: -1s; }
+    :global(body:has(.game.is-won)) .hero-logo {
+        animation: celebrate .9s var(--ease-spring) 3, float 5s ease-in-out 2.7s infinite;
+    }
+}
+</style>

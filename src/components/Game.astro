@@ -1,60 +1,87 @@
 ---
 import SocialShare from '@component/SocialShare.astro';
+
+const confettiColors = ['honey', 'pink', 'leaf', 'sky'];
+const confetti = Array.from({ length: 18 }, (_, i) => {
+    const angle = (i / 18) * 2 * Math.PI;
+    const distance = 6 + (i % 3) * 2.5;
+    return [
+        `--x:${(Math.cos(angle) * distance).toFixed(2)}rem`,
+        `--y:${(Math.sin(angle) * distance * 0.55 - 2).toFixed(2)}rem`,
+        `--r:${(i * 73) % 360}deg`,
+        `--d:${(i % 4) * 60}ms`,
+        `--c:var(--${confettiColors[i % confettiColors.length]})`,
+    ].join(';');
+});
 ---
 
-<div x-data="numberbee()">
-<p>
-    Options:
-    <input x-ref="easy" id="easy" type="checkbox" name="levelc" value="easy" @click='level'/>
-    <label for="easy">No repetition</label>
-    <input x-ref="binary" id="binary" type="checkbox" name="levelc" value="binary" @click='level'/>
-    <label for="binary">Binary</label>
-</p>
-<p>
-    <label for="guess" x-show="l=='standard'">Enter your guess, a five digit number (digits can repeat) and press `Enter`</label>
-    <label for="guess" x-show="l=='easy'" x-cloak>Enter your guess, a five digit number (digits can not repeat) and press `Enter`</label>
-    <label for="guess" x-show="l=='binary'" x-cloak>Enter your guess, a five binary number (just zeros and ones ) and press `Enter`</label>
-    <input class="no-spin" id="guess" type="number" inputmode="numeric" pattern="[0-9]*" @input="input" @keyup.enter="keypress" />
-</p>
-<p x-show="count" x-cloak>Consumed <span x-text="count"></span> of <span x-text="m"></span> guesses!</p>
-<p x-show="msg" x-cloak>Already tried!</p>
-
-<div x-show="ended" x-cloak>
-    <p>Contratulations! You guessed the number from <span x-text="count"></span> tries! </p>
-    <p><a href="/">Click to start again!</a></p>
-    <p>Pass the challenge to friends:</p>
-</div>
-
-<div x-show="wrong" x-cloak>
-    <p>Hmm! I guess more training is needed! </p>
-    <p><a href="/">Click to start again!</a></p>
-    <p>Could your friends do better!?</p>
-</div>
-
-<p x-show="ended || wrong" x-cloak>
-    <SocialShare />
-</p>
-
-<div class="t">
-    <div class="rr">
-        <div x-text="n[0]"></div>
-        <div x-text="n[1]"></div>
-        <div x-text="n[2]"></div>
-        <div x-text="n[3]"></div>
-        <div x-text="n[4]"></div>
-        <div>P</div>
-        <div>M</div>
+<section class="card game reveal" style="--i:1" aria-label="NumberBee game" x-data="numberbee()" :class="{ 'is-won': ended, 'is-lost': wrong }">
+<div class="game-options">
+    <div class="modes" role="group" aria-labelledby="modes-label">
+        <span class="modes-label" id="modes-label">Options:</span>
+        <input x-ref="easy" id="easy" class="chip-input" type="checkbox" name="levelc" value="easy" @click='level'/>
+        <label for="easy" class="chip">No repetition</label>
+        <input x-ref="binary" id="binary" class="chip-input" type="checkbox" name="levelc" value="binary" @click='level'/>
+        <label for="binary" class="chip">Binary</label>
     </div>
-    <template x-for="g in guesses"> 
-        <div class="r">
-            <div x-text="g.v[0]"></div>
-            <div x-text="g.v[1]"></div>
-            <div x-text="g.v[2]"></div>
-            <div x-text="g.v[3]"></div>
-            <div x-text="g.v[4]"></div>
-            <div x-text="g.p"></div>
-            <div x-text="g.m"></div>
+    <p class="mode-meta"><span x-text="{ easy: 'No repetition', binary: 'Binary' }[l] || 'Standard'">Standard</span> mode · <span x-text="m">15</span> guesses</p>
+</div>
+
+<div class="guess">
+    <label class="guess-label" for="guess" x-show="l=='standard'">Enter your guess, a five digit number (digits can repeat) and press <kbd>Enter</kbd></label>
+    <label class="guess-label" for="guess" x-show="l=='easy'" x-cloak>Enter your guess, a five digit number (digits can not repeat) and press <kbd>Enter</kbd></label>
+    <label class="guess-label" for="guess" x-show="l=='binary'" x-cloak>Enter your guess, a five digit binary number (just zeros and ones) and press <kbd>Enter</kbd></label>
+    <div class="guess-row">
+        <input class="no-spin guess-input" id="guess" x-ref="guess" type="number" inputmode="numeric" pattern="[0-9]*" placeholder="?????" autocomplete="off" @input="input" @keyup.enter="keypress" />
+        <button class="btn btn-primary guess-btn" type="button" @click="keypress({ target: $refs.guess }); $refs.guess.focus()">Guess</button>
+    </div>
+</div>
+
+<div class="status" x-show="count" x-cloak>
+    <div class="progress">
+        <p>Consumed <span x-text="count"></span> of <span x-text="m"></span> guesses!</p>
+        <div class="meter" aria-hidden="true"><span :style="{ '--p': count / m }"></span></div>
+    </div>
+    <p class="toast" role="status" x-show="msg" x-cloak>Already tried!</p>
+</div>
+
+<div class="result" x-show="ended || wrong" x-cloak>
+    <div class="result-win" x-show="ended">
+        <div class="confetti" aria-hidden="true">{confetti.map((style) => <i style={style}></i>)}</div>
+        <p class="result-title">Congratulations!</p>
+        <p>You guessed the number from <span x-text="count"></span> tries!</p>
+        <p><a class="btn btn-primary" href="/">Click to start again!</a></p>
+        <p>Pass the challenge to friends:</p>
+    </div>
+    <div class="result-lose" x-show="wrong">
+        <p class="result-title">Hmm!</p>
+        <p>I guess more training is needed!</p>
+        <p><a class="btn btn-primary" href="/">Click to start again!</a></p>
+        <p>Could your friends do better!?</p>
+    </div>
+    <SocialShare />
+</div>
+
+<div class="board" role="group" aria-label="Guesses">
+    <div class="board-row board-secret" :class="{ 'is-revealed': ended || wrong }">
+        <div class="tile tile-secret" x-text="n[0]">?</div>
+        <div class="tile tile-secret" x-text="n[1]">?</div>
+        <div class="tile tile-secret" x-text="n[2]">?</div>
+        <div class="tile tile-secret" x-text="n[3]">?</div>
+        <div class="tile tile-secret" x-text="n[4]">?</div>
+        <abbr class="tile tile-head tile-p" title="Digits in the correct position">P</abbr>
+        <abbr class="tile tile-head tile-m" title="Digits guessed but misplaced">M</abbr>
+    </div>
+    <template x-for="g in guesses" :key="g.v">
+        <div class="board-row" :class="{ 'is-empty': !g.p, 'is-winner': g.p == '5p' }">
+            <div class="tile" x-text="g.v[0]"></div>
+            <div class="tile" x-text="g.v[1]"></div>
+            <div class="tile" x-text="g.v[2]"></div>
+            <div class="tile" x-text="g.v[3]"></div>
+            <div class="tile" x-text="g.v[4]"></div>
+            <div class="tile tile-hint tile-p" :class="{ 'is-zero': g.p == '-' }" x-text="g.p"></div>
+            <div class="tile tile-hint tile-m" :class="{ 'is-zero': g.m == '-' }" x-text="g.m"></div>
         </div>
     </template>
 </div>
-</div>
+</section>

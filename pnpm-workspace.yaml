@@ -1,0 +1,9 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+
+peerDependencyRules:
+  allowedVersions:
+    # @vite-pwa/astro@1.2.0 still declares astro <=5, but already targets Vite's
+    # environment API and builds/registers the service worker fine on Astro 7.
+    '@vite-pwa/astro>astro': '7'

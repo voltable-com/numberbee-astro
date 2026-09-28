@@ -1,4 +1,4 @@
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 
 // https://astro.build/config
 import AstroPWA from '@vite-pwa/astro';
@@ -11,6 +11,21 @@ export default defineConfig({
   build: {
     assets: "assets",
   },
+  fonts: [{
+    provider: fontProviders.fontsource(),
+    name: "Fredoka",
+    cssVariable: "--font-display",
+    weights: ["300 700"],
+    styles: ["normal"],
+    subsets: ["latin"],
+  }, {
+    provider: fontProviders.fontsource(),
+    name: "Nunito",
+    cssVariable: "--font-body",
+    weights: ["200 900"],
+    styles: ["normal"],
+    subsets: ["latin"],
+  }],
   vite: {
     logLevel: "info",
     define: {
@@ -18,14 +33,17 @@ export default defineConfig({
     },
   },
   integrations: [AstroPWA({
-    mode: 'development',
     base: '/',
     scope: '/',
+    registerType: 'autoUpdate',
+    injectRegister: 'inline',
     includeAssets: ['favicon.svg'],
     manifest: {
       name: 'Numberbee Game by Voltable.com',
       short_name: 'Numberbee Game',
-      theme_color: '#ffffff',
+      description: seoconfig.description,
+      theme_color: '#ffc237',
+      background_color: '#fff8e2',
       start_url: '/',
       icons: [{
         src: 'favicon-192.png',
@@ -43,7 +61,7 @@ export default defineConfig({
       }]
     },
     workbox: {
-      globPatterns: ['**/*.{css,js,html,svg,png,ico,txt}']
+      globPatterns: ['**/*.{css,js,html,svg,png,ico,txt,woff2}']
     },
     devOptions: {
       enabled: true,

@@ -1,58 +1,118 @@
 ---
 ---
 <div class="theme-switch-wrapper" x-data="toggletheme()">
-    <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox" @click="switchTheme" x-ref="toggleTheme" />
-        <div class="slider round"></div>
+    <label class="theme-switch" for="checkbox" title="Enable/Disable Dark Mode!">
+        <input type="checkbox" id="checkbox" role="switch" @click="switchTheme" x-ref="toggleTheme" />
+        <span class="slider" aria-hidden="true">
+            <span class="star star-1"></span>
+            <span class="star star-2"></span>
+            <span class="star star-3"></span>
+            <span class="knob">
+                <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="4.2" fill="currentColor"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>
+                <svg class="icon icon-moon" viewBox="0 0 24 24"><path fill="currentColor" d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8Z"/></svg>
+            </span>
+        </span>
+        <span class="visually-hidden">Enable/Disable Dark Mode!</span>
     </label>
-    <em>Enable/Disable Dark Mode!</em>
 </div>
 <style>
 .theme-switch-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap:7px;
 }
 .theme-switch {
-    display: inline-block;
-    height: 34px;
     position: relative;
-    width: 60px;
+    display: inline-block;
+    width: 4rem;
+    height: 2.25rem;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
 .theme-switch input {
-    display:none;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
 }
 .slider {
-    background-color: #ccc;
-    bottom: 0;
-    cursor: pointer;
-    left: 0;
     position: absolute;
-    right: 0;
-    top: 0;
-    transition: .4s;
+    inset: 0;
+    overflow: hidden;
+    border-radius: var(--pill);
+    background: linear-gradient(135deg, oklch(86% .09 225), oklch(76% .12 240));
+    box-shadow: inset 0 2px 4px oklch(30% .08 240 / .35), 0 0 0 2px var(--border), var(--shadow-sm);
+    transition: background-color .4s;
 }
-.slider:before {
-    background-color: #fff;
-    bottom: 4px;
-    content: "";
-    height: 26px;
-    left: 4px;
+.knob {
     position: absolute;
-    transition: .4s;
-    width: 26px;
-}
-input:checked + .slider {
-    background-color: #66bb6a;
-}
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-.slider.round {
-    border-radius: 34px;
-}
-.slider.round:before {
+    top: .25rem;
+    left: .25rem;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
     border-radius: 50%;
-}        
+    color: oklch(72% .18 70);
+    background: oklch(99% .03 95);
+    box-shadow: 0 2px 4px oklch(30% .08 240 / .35);
+    transition: transform .55s var(--ease-spring);
+}
+.icon {
+    grid-area: 1 / 1;
+    width: 1.2rem;
+    height: 1.2rem;
+    transition: opacity .3s, transform .5s var(--ease-spring);
+}
+.icon-moon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(.5);
+}
+.star {
+    position: absolute;
+    width: .22rem;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: oklch(97% .04 95);
+    opacity: 0;
+    transform: translateY(.5rem);
+    transition: opacity .4s, transform .5s var(--ease-spring);
+}
+.star-1 { top: .5rem; left: .75rem; }
+.star-2 { top: 1.2rem; left: 1.35rem; width: .16rem; }
+.star-3 { top: .7rem; left: 1.9rem; width: .14rem; }
+
+input:checked + .slider {
+    background: linear-gradient(135deg, oklch(34% .09 285), oklch(22% .06 270));
+}
+input:checked + .slider .knob {
+    transform: translateX(1.75rem) rotate(360deg);
+    color: oklch(88% .1 90);
+    background: oklch(30% .05 280);
+}
+input:checked + .slider .icon-sun {
+    opacity: 0;
+    transform: rotate(90deg) scale(.5);
+}
+input:checked + .slider .icon-moon {
+    opacity: 1;
+    transform: none;
+}
+input:checked + .slider .star {
+    opacity: .9;
+    transform: none;
+}
+input:focus-visible + .slider {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+}
+@media (hover: hover) {
+    .theme-switch:hover .knob {
+        scale: 1.08;
+    }
+}
 </style>

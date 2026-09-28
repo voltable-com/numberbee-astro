@@ -3,6 +3,7 @@ import '@style/reset.css';
 import '@style/m.css';
 
 import { SEO } from "astro-seo"
+import { pwaInfo } from "virtual:pwa-info"
 import { seoconfig } from "@util/seoconfig"
 import Favicons from "@component/Favicons.astro"
 import Fonts from "@component/Fonts.astro"
@@ -35,12 +36,21 @@ const {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Apply the saved (or system) theme before first paint. -->
+    <script is:inline>
+        try {
+            document.documentElement.className = localStorage.getItem('theme') ||
+                (matchMedia('(prefers-color-scheme: dark)').matches ? 'theme-dark' : 'theme-light');
+        } catch (e) {}
+    </script>
+
     <meta name="author" content="Voltable.com, @VoltableCom">
     <meta name="keywords" content="voltable, online game, web game, number game, binary number">
-    <link rel="manifest" href="manifest.webmanifest">
-    
-    <script src="js/m.js" is:inline></script>
-    <script defer src="js/a.js" is:inline></script>
+    {pwaInfo && <Fragment set:html={pwaInfo.webManifest.linkTag} />}
+    {import.meta.env.PROD && pwaInfo?.registerSW && <Fragment set:html={pwaInfo.registerSW.scriptTag} />}
+
+    <script src="/js/m.js" is:inline></script>
+    <script defer src="/js/a.js" is:inline></script>
 
     <SEO
         title={title}
@@ -80,7 +90,7 @@ const {
 </head>
 <body>
 
-    <div class="a">
+    <div class="page">
         <slot />
     </div>
 

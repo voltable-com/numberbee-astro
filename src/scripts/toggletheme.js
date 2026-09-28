@@ -1,23 +1,25 @@
 export default () => ({
     init: function() {
-        const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
-  
-        if (currentTheme) {
-            document.documentElement.className = currentTheme;
-  
-            if (currentTheme === 'theme-dark') {
-                this.$refs.toggleTheme.checked = true;
-            }
-        }
+        // The theme class is applied by an inline script in <head> before first paint.
+        this.$refs.toggleTheme.checked = document.documentElement.className === 'theme-dark';
     },
     switchTheme: function(e) {
-        if (e.target.checked) {
-        document.documentElement.className = 'theme-dark';
-        localStorage.setItem('theme', 'theme-dark');
+        const theme = e.target.checked ? 'theme-dark' : 'theme-light';
+        const apply = () => {
+            document.documentElement.className = theme;
+            localStorage.setItem('theme', theme);
+        };
+        if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            apply();
+            return;
         }
-        else {
-        document.documentElement.className = 'theme-light';
-        localStorage.setItem('theme', 'theme-light');
-        }      
+        const r = e.target.getBoundingClientRect();
+        const x = r.left + r.width / 2;
+        const y = r.top + r.height / 2;
+        const style = document.documentElement.style;
+        style.setProperty('--vt-x', x + 'px');
+        style.setProperty('--vt-y', y + 'px');
+        style.setProperty('--vt-r', Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 'px');
+        document.startViewTransition(apply);
     }
   })

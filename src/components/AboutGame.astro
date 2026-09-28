@@ -1,15 +1,58 @@
-<section>
-    <h3>About the game</h3>
-    <p style="text-align: justify">
-        NumberBee is an easy and fun discovery number game. 
-        Even if you don't love numbers you will love this game. 
-        It is played by given a five digits number and you receive some hints. 
-        Number could be any number, digits could repeat themself or not or could be a binary number.
-        Although there might be an optimal strategy to play, 
-        there is always some level of chance to discover the number. 
-        If you beat the game and would like to master it, try to finish with a smaller steps posible. 
-        That would mean that you finished with fewer guesses. 
-        This game is mobile compatible and you can play it on any device 
+<section class="card about reveal-on-scroll" aria-labelledby="about-the-game">
+    <div class="section-head">
+        <span class="section-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="14" rx="5" ry="6"/><path d="M7.4 12h9.2M7.4 16h9.2M9.5 8.5C8 6 5 5.5 3.5 7s-.5 4.5 3.9 4.9M14.5 8.5C16 6 19 5.5 20.5 7s.5 4.5-3.9 4.9"/></svg></span>
+        <h2 id="about-the-game">About the game</h2>
+    </div>
+    <p>
+        NumberBee is an easy and fun discovery number game.
+        Even if you don't love numbers you will love this game.
+        It is played by given a five digits number and you receive some hints.
+        Number could be any number, digits could repeat themselves or not or could be a binary number.
+    </p>
+    <p>
+        Although there might be an optimal strategy to play,
+        there is always some level of chance to discover the number.
+        If you beat the game and would like to master it, try to finish with a smaller steps possible.
+        That would mean that you finished with fewer guesses.
+    </p>
+    <p>
+        This game is mobile compatible and you can play it on any device
         - iPhone, iPad, Android or any other smartphone or normal computer.
     </p>
+    <ul class="perks" role="list">
+        <li style="--c: var(--honey)">Three game modes</li>
+        <li style="--c: var(--leaf)">Fewer guesses, more glory</li>
+        <li style="--c: var(--sky)">Plays on any device</li>
+    </ul>
 </section>
+
+<style>
+.perks {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: var(--space-m);
+}
+.perks li {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .35rem .85rem .35rem .6rem;
+    font-family: var(--font-fun);
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--heading);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--pill);
+}
+.perks li::before {
+    content: "";
+    width: .8rem;
+    aspect-ratio: .866;
+    clip-path: var(--hex);
+    background: var(--c);
+}
+</style>

@@ -1,10 +1,86 @@
-<section class="hp">
-    <h3>How to play</h3>
+<section class="card hp reveal-on-scroll" aria-labelledby="how-to-play">
+    <div class="section-head">
+        <span class="section-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 9a3 3 0 0 1 5.8 1c0 2-3 2.6-3 4.5"/><path d="M12 18.5h.01"/></svg></span>
+        <h2 id="how-to-play">How to play</h2>
+    </div>
     <p>For the game <code>'NumberBee'</code> the player has to guess the hidden number of 5 digits.</p>
     <p>In the two last columns <code>'P'</code> and <code>'M'</code> player will receive hints.</p>
-    <p><code>'P'</code> means how many digits are in correct position.</p>
-    <p><code>'M'</code> means how many digits are misplaced.</p>
-    <p>Users has only <code>five</code> tries in binary mode and <code>fifteen</code> tries for the other modes.</p>
-    <p>Ex: <code>2p, 1m</code> equals with two digits are in correct position and one are guessed but misplaced.</p>
+    <ul class="legend" role="list">
+        <li><span class="badge badge-p" aria-hidden="true">P</span><p><code>'P'</code> means how many digits are in correct position.</p></li>
+        <li><span class="badge badge-m" aria-hidden="true">M</span><p><code>'M'</code> means how many digits are misplaced.</p></li>
+    </ul>
+    <p>Users have only <code>five</code> tries in binary mode and <code>fifteen</code> tries for the other modes.</p>
+    <div class="example" aria-hidden="true">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span class="example-p">2p</span><span class="example-m">1m</span>
+    </div>
+    <p>Ex: <code>2p, 1m</code> means two digits are in correct position and one is guessed but misplaced.</p>
     <p>The game can be played in three modes. <code>Standard</code> in which digits can repeat, <code>no repeat</code> which in this case digits are unique and finally <code>binary</code> where digits are just ones and zeros. </p>
 </section>
+
+<style>
+.legend {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+    margin-block: .9rem;
+}
+@container (min-width: 30rem) {
+    .legend {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+.legend li {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .7rem .8rem;
+    border-radius: var(--radius);
+    background: var(--surface-2);
+    line-height: 1.4;
+}
+.badge, .example span {
+    flex: none;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-fun);
+    font-weight: 700;
+    border-radius: 30%;
+    color: var(--tile-ink);
+    background: var(--tile);
+    box-shadow: inset 0 -.16em 0 var(--tile-edge);
+}
+.badge {
+    width: 2.5rem;
+    aspect-ratio: 1;
+    font-size: 1.25rem;
+}
+.badge-p, .example .example-p {
+    color: var(--hit-ink);
+    background: var(--hit);
+    box-shadow: inset 0 -.16em 0 var(--hit-edge);
+}
+.badge-m, .example .example-m {
+    color: var(--near-ink);
+    background: var(--near);
+    box-shadow: inset 0 -.16em 0 var(--near-edge);
+}
+.example {
+    display: flex;
+    justify-content: center;
+    gap: .35rem;
+    margin-block: 1rem .6rem;
+}
+.example span {
+    width: 2.2rem;
+    aspect-ratio: 1;
+    font-size: 1.1rem;
+}
+.example .example-p {
+    margin-inline-start: .5rem;
+}
+.example .example-p, .example .example-m {
+    width: 2.5rem;
+    font-size: .95rem;
+}
+</style>

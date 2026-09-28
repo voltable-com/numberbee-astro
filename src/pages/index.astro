@@ -1,5 +1,4 @@
 ---
-import ToggleTheme from '@component/ToggleTheme.astro'
 import Footer from '@component/Footer.astro'
 import HowToPlay from '@component/HowToPlay.astro'
 import AboutGame from '@component/AboutGame.astro'
@@ -10,11 +9,13 @@ import Layout from '@layout/Layout.astro'
 const title = "NumberBee Game by Voltable.com - online game, binary number, fun discovery number game"
 ---
 <Layout title={title}>
-  <ToggleTheme />
   <GameHeader />
-  <Game />
-  <HowToPlay />
-  <AboutGame />
+  <main class="main">
+    <Game />
+    <div class="info">
+      <HowToPlay />
+      <AboutGame />
+    </div>
+  </main>
   <Footer />
 </Layout>
-
