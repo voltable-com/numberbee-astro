@@ -6,7 +6,8 @@ import { seoconfig } from "./utils/seoconfig";
 
 // https://astro.build/config
 export default defineConfig({
-  site: seoconfig.baseURL,
+  site: seoconfig.site,
+  base: seoconfig.base,
   compressHTML: true,
   build: {
     assets: "assets",
@@ -33,8 +34,6 @@ export default defineConfig({
     },
   },
   integrations: [AstroPWA({
-    base: '/',
-    scope: '/',
     registerType: 'autoUpdate',
     injectRegister: 'inline',
     includeAssets: ['favicon.svg'],
@@ -44,7 +43,6 @@ export default defineConfig({
       description: seoconfig.description,
       theme_color: '#ffc237',
       background_color: '#fff8e2',
-      start_url: '/',
       icons: [{
         src: 'favicon-192.png',
         sizes: '192x192',

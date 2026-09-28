@@ -13,7 +13,7 @@ import ToggleTheme from '@component/ToggleTheme.astro'
         <span class="deco deco-3" aria-hidden="true"></span>
         <span class="deco deco-4" aria-hidden="true"></span>
         <div class="hero-badge">
-            <img class="hero-logo" src="/favicon.svg" alt="NumberBee Game Logo" width="120" height="120" />
+            <img class="hero-logo" src={`${import.meta.env.BASE_URL}favicon.svg`} alt="NumberBee Game Logo" width="120" height="120" />
         </div>
         <h1 class="hero-title"><span>Number</span><span class="hero-bee">Bee</span> Game</h1>
         <p class="hero-tagline">Crack the hidden five-digit number with clever guesses and buzzing hints.</p>

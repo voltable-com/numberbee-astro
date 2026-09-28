@@ -1,9 +1,14 @@
+---
+import { seoconfig } from "@util/seoconfig"
+
+const url = encodeURIComponent(seoconfig.baseURL)
+---
 <div class="share">
-    <a href="https://twitter.com/intent/tweet?text=Check+this+little+fun+discovery+number+game!&url=http://www.numberbeegame.com" rel="noopener" target="_blank" class="share-btn share-x">
+    <a href={`https://twitter.com/intent/tweet?text=Check+this+little+fun+discovery+number+game!&url=${url}`} rel="noopener" target="_blank" class="share-btn share-x">
         <span class="share-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.19L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.18h1.7L7.4 4.73H5.58l11.09 14.45Z"/></svg></span>
         Tweet!
     </a>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//www.numberbeegame.com" rel="noopener" target="_blank" class="share-btn share-fb">
+    <a href={`https://www.facebook.com/sharer/sharer.php?u=${url}`} rel="noopener" target="_blank" class="share-btn share-fb">
         <span class="share-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.87.25-1.46 1.5-1.46h1.6V4.46A21 21 0 0 0 14.27 4.3c-2.3 0-3.87 1.4-3.87 3.97v2.23H7.8v3h2.6V21h3.1Z"/></svg></span>
         Facebook!
     </a>
