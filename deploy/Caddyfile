@@ -22,7 +22,7 @@
 	header X-XSS-Protection "1; mode=block"
 	header Referrer-Policy "strict-origin-when-cross-origin"
 	header Permissions-Policy "accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), xr-spatial-tracking=()"
-	header Content-Security-Policy "default-src 'self'; script-src 'self' https://lens.cocktailcentral.net 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net data:; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https:; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;"
+	header Content-Security-Policy "default-src 'self'; script-src 'self' https://lens.cocktailcentral.net https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.bunny.net https://cdn.jsdelivr.net; font-src 'self' https://fonts.bunny.net data:; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https:; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;"
 	header Cross-Origin-Opener-Policy "same-origin"
 	header Cross-Origin-Resource-Policy "same-origin"
 	header X-Permitted-Cross-Domain-Policies "none"
