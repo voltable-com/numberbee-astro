@@ -1,0 +1,9 @@
+# Build context = repo root (deploy/Dockerfile). Everything the Dockerfile COPYs
+# (package.json, lockfile, pnpm-workspace.yaml, tsconfig, astro.config, utils/,
+# src/, public/, deploy/Caddyfile) must stay in.
+.git
+.astro
+.cursor
+.screenshots
+node_modules
+dist

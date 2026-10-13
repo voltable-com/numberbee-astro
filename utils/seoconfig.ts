@@ -1,5 +1,5 @@
 const site = "https://www.voltable.com";
-const base = "/games/numberbee/";
+const base = "/game/numberbee/";
 const baseURL = `${site}${base}`;
 
 /**

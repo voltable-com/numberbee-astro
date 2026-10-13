@@ -1,0 +1,31 @@
+# Production stack: one published image. Nothing here builds, so this folder is
+# all a server needs:
+#
+#   scp -r deploy server:/srv/numberbee && cd /srv/numberbee
+#   cp .env.example .env   # set TAG
+#   docker compose pull
+#   docker compose up -d
+#
+# Image ref = REGISTRY + an explicit immutable TAG in the .env beside this file.
+# Upgrade = bump TAG, pull, up -d. Roll back = old TAG back.
+#
+# The container listens on :8080 and answers under /game/numberbee/ (its `/`
+# 301s there). Put the TLS proxy for www.voltable.com in front and mount this
+# loopback port at that path.
+
+name: numberbee
+
+services:
+  web:
+    image: ${REGISTRY:-mini.local/registry}/numberbee-web:${TAG:?TAG is required; use an immutable release tag}
+    ports:
+      # Host side of the mapping: loopback `127.0.0.1:8781` behind the local TLS
+      # proxy is the default; the container always listens on 8080.
+      - "${PUBLISH:-127.0.0.1:8781}:8080"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/game/numberbee/"]
+      interval: 30s
+      timeout: 5s
+      start_period: 5s
+      retries: 3

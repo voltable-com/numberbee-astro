@@ -1,0 +1,103 @@
+{
+	# No admin endpoint, no ACME: TLS ends at the reverse proxy in front, which
+	# also owns the public hostname, the /game/numberbee mount point and HSTS.
+	admin off
+	auto_https off
+	persist_config off
+}
+
+:8080 {
+	# The Astro bundle is one level down: /srv/game/numberbee backs
+	# /game/numberbee/. The `file` matchers below need a root resolved before
+	# matchers run, so it sits at site level (audicious/apps/web pattern) and
+	# request paths are used as-is.
+	root * /srv
+	encode zstd gzip
+
+	# Security headers copied from nginx www.voltable.com.conf (`always`, so on
+	# every response including redirects and errors). HSTS deliberately NOT here
+	# — the transport set belongs to the TLS front.
+	header X-Content-Type-Options "nosniff"
+	header X-Frame-Options "DENY"
+	header X-XSS-Protection "1; mode=block"
+	header Referrer-Policy "strict-origin-when-cross-origin"
+	header Permissions-Policy "accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), xr-spatial-tracking=()"
+	header Content-Security-Policy "default-src 'self'; script-src 'self' https://lens.cocktailcentral.net 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net data:; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https:; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; upgrade-insecure-requests;"
+	header Cross-Origin-Opener-Policy "same-origin"
+	header Cross-Origin-Resource-Policy "same-origin"
+	header X-Permitted-Cross-Domain-Policies "none"
+	header X-Download-Options "noopen"
+
+	# Matchers — handles below are evaluated in this declaration order, so the
+	# canonicalisation redirects win over the file/fallback logic.
+	@apex path / /game/numberbee
+	@index path /game/numberbee/index.html /game/numberbee/index.html/
+	# conf `location ~ /\.` — hidden files are never served.
+	@dot path_regexp /\.
+	# conf `location ~ ^/(\.env|composer...|package...|.git|node_modules)`.
+	# (.env/.git paths are already caught by @dot.) Nothing under /srv matches
+	# either rule; this is header parity, not a real exposure.
+	@sensitive path /package.json /package-lock.json /pnpm-lock.yaml /composer.json /composer.lock /node_modules /node_modules/*
+	# conf `location ~* \.[a-z0-9]+$ { try_files $uri =404; }` — a URI naming a
+	# file 404s when that file is absent instead of falling back to the document
+	# (robots.txt/humans.txt exist on disk, so they keep serving; a wrong chunk
+	# name is a hard 404, never a 200-HTML copy of the game).
+	@missing {
+		path_regexp ext (?i)\.[a-z0-9]+$
+		not file
+	}
+	# Astro content-hashed chunks + the workbox runtime (hash in the name):
+	# they never change content under one URL.
+	@hashed path /game/numberbee/assets/* /game/numberbee/workbox-*.js
+	# The service worker IS the update channel (registerType autoUpdate) — it
+	# must be revalidated on every load, never cached for a year.
+	@sw path /game/numberbee/sw.js
+	# The manifest changes only with a rebuild — day-scale cache like audicious.
+	@manifest path /game/numberbee/manifest.webmanifest
+
+	handle @apex {
+		redir / /game/numberbee/ 301
+		redir /game/numberbee /game/numberbee/ 301
+	}
+
+	handle @index {
+		redir /game/numberbee/index.html /game/numberbee/ 301
+		redir /game/numberbee/index.html/ /game/numberbee/ 301
+	}
+
+	handle @dot {
+		respond "Forbidden" 403
+	}
+
+	handle @sensitive {
+		respond "Forbidden" 403
+	}
+
+	handle @missing {
+		respond "" 404
+	}
+
+	handle @hashed {
+		header Cache-Control "public, max-age=31536000, immutable"
+		file_server
+	}
+
+	handle @sw {
+		header Cache-Control "public, max-age=0, must-revalidate"
+		file_server
+	}
+
+	handle @manifest {
+		header Cache-Control "public, max-age=86400"
+		file_server
+	}
+
+	# Everything else: static file, then directory index, then — as the conf's
+	# `try_files $uri $uri/ /index.html` did — the game document itself for any
+	# remaining path. The game is a single page; the fallback only keeps stray
+	# extension-less URLs answering the app instead of a bare Caddy 404.
+	handle {
+		try_files {path} {path}/ /game/numberbee/index.html
+		file_server
+	}
+}
